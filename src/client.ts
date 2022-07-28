@@ -12,8 +12,8 @@ const intents = GatewayIntents.MessageContent |
 export class Client extends Session {
 
     constructor() {
-        super({ token: env.TOKEN || "", intents });
-        this.prefix = env.PREFIX || "!";
+        super({ token: env.MARINE_TOKEN || "", intents });
+        this.prefix = env.PREFIX || "m.";
         this.intents = intents;
     }
 
