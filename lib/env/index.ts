@@ -5,7 +5,7 @@ export type LoadEnvOutput = [typeof process.env, DotenvConfigOutput];
 
 export function LoadEnv(options: DotenvConfigOptions = {
     debug: true,
-    override: false
+    override: true
 }): LoadEnvOutput {
     const configOutput = config(options);
     return [process.env, configOutput];
