@@ -1,0 +1,39 @@
+{
+    "extends": "./.eslintrc-no-types.json",
+    "overrides": [
+      {
+        "files": ["./lib/*.ts", "./lib/**/*.ts", "./src/*.ts", "./src/**/*.ts"],
+        "parser": "@typescript-eslint/parser",
+        "parserOptions": {
+          "ecmaVersion": 11,
+          "sourceType": "module",
+          "tsconfigRootDir": ".",
+          "project": ["./tsconfig.json"]
+        },
+        "extends": ["./.eslintrc-no-types.json"],
+        "rules": {
+          "@typescript-eslint/restrict-plus-operands": "off",
+
+          "@typescript-eslint/no-unsafe-assignment": "off",
+          "@typescript-eslint/no-unsafe-call": "off",
+          "@typescript-eslint/no-unsafe-member-access": "off",
+          "@typescript-eslint/no-unsafe-return": "off",
+          "@typescript-eslint/restrict-template-expressions": "off",
+  
+          "@typescript-eslint/no-floating-promises": "error",
+          "@typescript-eslint/no-for-in-array": "error",
+          "@typescript-eslint/no-misused-promises": "error",
+          "@typescript-eslint/no-throw-literal": "error",
+          "@typescript-eslint/no-unnecessary-condition": "off",
+  
+          "@typescript-eslint/no-unnecessary-qualifier": "off",
+  
+          "@typescript-eslint/no-unnecessary-type-arguments": "off",
+  
+          "@typescript-eslint/no-unnecessary-type-assertion": "error",
+          "@typescript-eslint/prefer-regexp-exec": "error",
+          "@typescript-eslint/prefer-string-starts-ends-with": "error"
+        }
+      }
+    ]
+  }
