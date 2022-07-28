@@ -12,12 +12,11 @@
   "author": "Nicolas A. Serna",
   "license": "Apache License 2.0",
   "dependencies": {
-    "@oasisjs/biscuit": "^0.2.1"
+    "@oasisjs/biscuit": "^0.2.1",
+    "dotenv": "^16.0.1",
+    "typescript": "^4.7.4",
+    "@types/node": "^18.6.2"
   },
   "devDependencies": {
-    "@types/node": "^18.6.2",
-    "dotenv": "^16.0.1",
-    "eslint": "^8.20.0",
-    "typescript": "^4.7.4"
-  }
+    "eslint": "^8.20.0"  }
 }
