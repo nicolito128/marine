@@ -1,4 +1,4 @@
-import { Session, GatewayIntents, enableCache, SessionCache } from '@oasisjs/biscuit';
+import { Session, GatewayIntents } from '@oasisjs/biscuit';
 import LoadEnv from '../lib/env/index';
 
 const [ env ] = LoadEnv();
@@ -10,12 +10,10 @@ export class Client extends Session {
         super({ token: env.TOKEN || "", intents });
         this.prefix = env.PREFIX || "!";
         this.intents = intents;
-        this.cache = enableCache(this as Session);
     }
 
     readonly prefix: string;
     readonly intents: number;
-    readonly cache: SessionCache;
 }
 
 export default Client;
