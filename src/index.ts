@@ -1,4 +1,5 @@
 import Client from './client';
+import Message from './../lib/messages/index';
 
 const bot: Client = new Client();
 
@@ -7,9 +8,13 @@ bot.on('ready', ({ user }) => {
     console.log('Using prefix: ', bot.prefix);
 });
 
-bot.on('messageCreate', (message) => {
-    if (message.content.startsWith(bot.prefix + 'ping')) {
-        message.reply({ content: 'pong!' });
+bot.on('messageCreate', (msg) => {
+    const message = new Message(msg, bot);
+
+    if (message.hasPrefix()) {
+        if (message.plainContent === 'ping') {
+            message.send('pong!');
+        }
     }
 });
 
