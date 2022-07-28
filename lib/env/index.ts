@@ -4,7 +4,7 @@ import * as process from 'process';
 export type LoadEnvOutput = [typeof process.env, (DotenvConfigOutput | undefined)];
 
 export function LoadEnv(options: DotenvConfigOptions = {debug: true}): LoadEnvOutput {
-    if (process.env.MARINE_TOKEN || process.env.PREFIX) {
+    if (process.env.MARINE_TOKEN && process.env.PREFIX) {
         return [process.env, undefined];
     }
 
