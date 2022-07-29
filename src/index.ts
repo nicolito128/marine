@@ -1,38 +1,14 @@
-import { urlToBase64 } from '@oasisjs/biscuit/biscuit'; 
 import Client from './client';
 import Message from './../lib/messages/index';
+import { LoadEvents, TriggerEvents } from './plugins/plugins';
 
 const bot: Client = new Client();
-const ONE_DAY = 24 * 3600 * 1000; // milliseconds in a day
-const guildId = '973427352560365658';
-const images = [
-    'https://i.imgur.com/fHWZEZK.png',
-    'https://i.imgur.com/nQHBa3I.png',
-    'https://i.imgur.com/5pEGDXx.png',
-    'https://i.imgur.com/ntOpVpP.png',
-    'https://i.imgur.com/tPS4DAg.png',
-    'https://i.imgur.com/HYT7Ouv.png',
-    'https://i.imgur.com/odzUSfQ.png',
-    'https://i.imgur.com/zlCr3No.png',
-    'https://i.imgur.com/agZ4vZW.jpeg'
-];
 
-function selectImage(): () => string {
-    let i: number = 0;
-
-    return function(){
-        i++;
-        if (i == images.length ) {
-            i = 0;
-        }
-
-        return images[i];
-    }
-}
-
-bot.on('ready', ({ user }) => {
+bot.on('ready', async ({ user }) => {
     console.log('Logged in as:', user.username);
     console.log('Using prefix: ', bot.prefix);
+
+    LoadEvents('guildCreate');
 });
 
 bot.on('messageCreate', (msg) => {
@@ -45,15 +21,8 @@ bot.on('messageCreate', (msg) => {
     }
 });
 
-bot.on('guildCreate', (guild) => {
-    if (guild.id === guildId) {
-        const select = selectImage();
-
-        setInterval(async () => {
-            const url = select();
-            await urlToBase64(url).then(icon => guild.edit({ icon }))
-        }, ONE_DAY);
-    }
+bot.on('guildCreate', guild => {
+    TriggerEvents('guildCreate', guild);
 });
 
 try {
