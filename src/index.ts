@@ -3,7 +3,7 @@ import Client from './client';
 import Message from './../lib/messages/index';
 
 const bot: Client = new Client();
-const A_DAY = 24 * 3600 * 1000; // milliseconds in a day
+const ONE_DAY = 24 * 3600 * 1000; // milliseconds in a day
 const guildId = '973427352560365658';
 const images = [
     'https://i.imgur.com/fHWZEZK.png',
@@ -36,7 +36,7 @@ bot.on('ready', ({ user }) => {
 });
 
 bot.on('messageCreate', (msg) => {
-    const message = new Message(msg, bot);
+    const message = new Message({message: msg, bot});
 
     if (message.hasPrefix()) {
         if (message.plainContent === 'ping') {
@@ -47,10 +47,12 @@ bot.on('messageCreate', (msg) => {
 
 bot.on('guildCreate', (guild) => {
     if (guild.id === guildId) {
+        const select = selectImage();
+
         setInterval(async () => {
-            const url = selectImage()();
+            const url = select();
             await urlToBase64(url).then(icon => guild.edit({ icon }))
-        }, A_DAY);
+        }, ONE_DAY);
     }
 });
 

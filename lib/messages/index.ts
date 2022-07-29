@@ -1,11 +1,13 @@
 import * as biscuit from '@oasisjs/biscuit';
 import Client from '../../src/client';
 
-export class Message {
-    constructor(msg: biscuit.Message, bot: Client) {
-        this.self = msg;
-        this.content = msg.content;
-        this.client = bot;
+export type CustomMessageOptions = { bot: Client, message: biscuit.Message }
+
+export class CustomMessage {
+    constructor(options: CustomMessageOptions) {
+        this.self = options.message;
+        this.client = options.bot;
+        this.content = this.self.content;
     }
 
     readonly self: biscuit.Message;
@@ -13,21 +15,20 @@ export class Message {
     readonly content: string;
 
     get plainContent(): string {
-        return this.content.replace(this.client.prefix, '').split(" ").shift() || "";
+        return this.content.replace(this.client.prefix, '').split(' ').shift() || '';
     }
 
     hasPrefix(content: string = this.content) {
         return content.startsWith(this.client.prefix);
     }
 
-    reply(options: biscuit.CreateMessage): Promise<biscuit.Message> {
-        return this.self.reply(options);
+    async reply(options: biscuit.CreateMessage): Promise<CustomMessage> {
+        return new CustomMessage({ bot: this.client, message: await this.self.reply(options) })
     }
 
     send(str: string) {
         return this.self.reply({ content: str })
     }
-
 }
 
-export default Message;
+export default CustomMessage;
