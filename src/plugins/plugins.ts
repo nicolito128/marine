@@ -4,7 +4,7 @@ export const PluginCollection: Map<string, Plugin[]> = new Map();
 
 export type Events = 'ready' | 'messageCreate' | 'messageUpdate' | 'messageDelete' | 'messageReactionAdd' | 'messageReactionRemove' | 'messageReactionRemoveAll' | 'messageReactionRemoveEmoji' | 'guildCreate' | 'guildDelete' | 'guildMemberAdd' | 'guildMemberUpdate' | 'guildMemberRemove' | 'guildBanAdd' | 'guildBanRemove' | 'guildEmojisUpdate' | 'guildRoleCreate' | 'guildRoleUpdate' | 'guildRoleDelete' | 'typingStart' | 'channelCreate' | 'channelUpdate' | 'channelDelete' | 'channelPinsUpdate' | 'threadCreate' | 'threadUpdate' | 'threadDelete' | 'threadListSync' | 'threadMemberUpdate' | 'threadMemberUpdate' | 'interactionCreate' | 'integrationCreate' | 'integrationUpdate' | 'integrationDelete' | 'inviteCreate' | 'inviteDelete' | 'autoModerationRuleCreate' | 'autoModerationRuleUpdate' | 'autoModerationRuleDelete' | 'autoModerationActionExecution' | 'stageInstanceCreate' | 'stageInstanceUpdate' | 'stageInstanceDelete' | 'guildScheduledEventCreate' | 'guildScheduledEventUpdate' | 'guildScheduledEventDelete' | 'guildScheduledEventUserAdd' | 'guildScheduledEventUserRemove' | 'raw' | 'webhooksUpdate' | 'userUpdate' | 'presenceUpdate' | 'debug';
 
-export type PluginConfig = {
+export type PluginSchema = {
     name: string;
     description?: string;
 };
@@ -16,8 +16,9 @@ export type Trigger<T extends TriggerArguments> = (...args: T) => unknown | Prom
 export type TriggerArguments = [obj?: any, ddy?: any];
 
 // Represents a Plugin that will be executed in some event of the library.
-export abstract class Plugin {
-    abstract config: PluginConfig;
+export abstract class Plugin implements PluginSchema{
+    abstract name: string;
+    abstract description?: string;
     abstract type: Events;
     abstract trigger: Trigger<TriggerArguments>;
 }
@@ -41,7 +42,7 @@ export function LoadEvents(event: Events) {
 
                     // Sets the new event.
                     PluginCollection.set(event || "", arr);
-                    console.log('Plugin loaded: ', plugin.config.name);
+                    console.log('Plugin loaded: ', plugin.name);
                 }
             )
         })

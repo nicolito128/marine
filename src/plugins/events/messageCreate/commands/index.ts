@@ -2,18 +2,18 @@ import * as fs from 'fs';
 import * as biscuit from '@oasisjs/biscuit/biscuit';
 import CustomMessage from '../../../../../lib/messages/index';
 import { CommandStruct } from '../../../commands';
-import { Events, Plugin, PluginConfig } from '../../../plugins';
+import { Events, Plugin } from '../../../plugins';
 
 const CommandCollection = new Map<string, CommandStruct>();
 
 export const Event = new class implements Plugin {
     constructor() {
-        this.config = { name: 'Command Handler' };
+        this.name = 'Command Handler';
         this.type = 'messageCreate';
         this.loaded = false;
     }
 
-    config: PluginConfig;
+    name: string;
     type: Events;
     loaded: boolean;
 

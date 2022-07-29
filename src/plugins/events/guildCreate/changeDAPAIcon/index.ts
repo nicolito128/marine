@@ -1,11 +1,11 @@
 import { Guild } from "@oasisjs/biscuit/biscuit";
-import { Events, Plugin, PluginConfig } from "src/plugins/plugins";
+import { Events, Plugin } from "src/plugins/plugins";
 
 const ONE_DAY = 24 * 3600 * 1000; // milliseconds in a day
 
 export const Event = new class implements Plugin {
     constructor() {
-        this.config = { name: 'Change Guild Icon' };
+        this.name ='Change Guild Icon';
         this.type = 'guildCreate';
         this.guildId = '744180989841003520';
         this.images = [
@@ -21,7 +21,7 @@ export const Event = new class implements Plugin {
         ];
     }
     
-    config: PluginConfig;
+    name: string;
     type: Events;
     guildId: string;
     images: string[];
