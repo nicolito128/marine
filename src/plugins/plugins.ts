@@ -27,15 +27,19 @@ export function LoadEvents(event: Events) {
     fs.readdirSync(`src/plugins/events/${event}`)
         .forEach(folder => {
             fs.readdirSync(`src/plugins/events/${event}/${folder}`)
-                .forEach(async file => {
+                .forEach(file => {
+                    // Catch only .js files (because the loaded files are from the dist folder)
                     file = file.replace('.ts', '.js');
 
-                    const required: { default?: Plugin, Event?: Plugin } = await import(__dirname + `/events/${event}/${folder}/${file}`);
-                    const plugin = required.default as Plugin;
+                    // Requiring the module 
+                    const required: { default?: Plugin, Event?: Plugin } = require(__dirname + `/events/${event}/${folder}/${file}`);
 
+                    // If the module has a default export, add it to the collection.
+                    const plugin = required.default as Plugin;
                     const arr = PluginCollection.get(event) || [];
                     arr.push(plugin)
 
+                    // Sets the new event.
                     PluginCollection.set(event || "", arr);
                 }
             )
