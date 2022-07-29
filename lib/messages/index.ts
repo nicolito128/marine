@@ -1,12 +1,10 @@
 import * as biscuit from '@oasisjs/biscuit';
-import Client from '../../src/client';
-
-export type CustomMessageOptions = { bot: Client, message: biscuit.Message }
+import client, { Client } from '../../src/client';
 
 export class CustomMessage {
-    constructor(options: CustomMessageOptions) {
-        this.self = options.message;
-        this.client = options.bot;
+    constructor(message: biscuit.Message) {
+        this.self = message;
+        this.client = client;
         this.content = this.self.content;
     }
 
@@ -23,11 +21,11 @@ export class CustomMessage {
     }
 
     async reply(options: biscuit.CreateMessage): Promise<CustomMessage> {
-        return new CustomMessage({ bot: this.client, message: await this.self.reply(options) })
+        return new CustomMessage(await this.self.reply(options));
     }
 
     send(str: string) {
-        return this.self.reply({ content: str })
+        return this.self.reply({ content: str });
     }
 }
 

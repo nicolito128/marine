@@ -1,4 +1,4 @@
-import * as fs from "fs";
+import * as fs from 'fs';
 
 export const PluginCollection: Map<string, Plugin[]> = new Map();
 
@@ -35,12 +35,13 @@ export function LoadEvents(event: Events) {
                     const required: { default?: Plugin, Event?: Plugin } = require(__dirname + `/events/${event}/${folder}/${file}`);
 
                     // If the module has a default export, add it to the collection.
-                    const plugin = required.default as Plugin;
+                    const plugin = required.Event as Plugin;
                     const arr = PluginCollection.get(event) || [];
                     arr.push(plugin)
 
                     // Sets the new event.
                     PluginCollection.set(event || "", arr);
+                    console.log('Plugin loaded: ', plugin.config.name);
                 }
             )
         })

@@ -4,20 +4,27 @@ import { Events, Plugin, PluginConfig } from "src/plugins/plugins";
 const ONE_DAY = 24 * 3600 * 1000; // milliseconds in a day
 
 export const Event = new class implements Plugin {
-    config: PluginConfig = { name: 'Change Guild Icon' }
-    type: Events = 'guildCreate';
-    guildId: string = '973427352560365658';
-    images: string[] = [
-        'https://i.imgur.com/fHWZEZK.png',
-        'https://i.imgur.com/nQHBa3I.png',
-        'https://i.imgur.com/5pEGDXx.png',
-        'https://i.imgur.com/ntOpVpP.png',
-        'https://i.imgur.com/tPS4DAg.png',
-        'https://i.imgur.com/HYT7Ouv.png',
-        'https://i.imgur.com/odzUSfQ.png',
-        'https://i.imgur.com/zlCr3No.png',
-        'https://i.imgur.com/agZ4vZW.jpeg'
-    ];
+    constructor() {
+        this.config = { name: 'Change Guild Icon' };
+        this.type = 'guildCreate';
+        this.guildId = '744180989841003520';
+        this.images = [
+            'https://i.imgur.com/fHWZEZK.png',
+            'https://i.imgur.com/nQHBa3I.png',
+            'https://i.imgur.com/5pEGDXx.png',
+            'https://i.imgur.com/ntOpVpP.png',
+            'https://i.imgur.com/tPS4DAg.png',
+            'https://i.imgur.com/HYT7Ouv.png',
+            'https://i.imgur.com/odzUSfQ.png',
+            'https://i.imgur.com/zlCr3No.png',
+            'https://i.imgur.com/agZ4vZW.jpeg'
+        ];
+    }
+    
+    config: PluginConfig;
+    type: Events;
+    guildId: string;
+    images: string[];
 
     async trigger(guild: Guild) {
         if (guild.id === this.guildId) {

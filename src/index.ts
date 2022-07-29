@@ -1,32 +1,19 @@
-import Client from './client';
-import Message from './../lib/messages/index';
+import client from './client';
 import { LoadEvents, TriggerEvents } from './plugins/plugins';
 
-const bot: Client = new Client();
-
-bot.on('ready', async ({ user }) => {
+client.on('ready', async ({ user }) => {
     console.log('Logged in as:', user.username);
-    console.log('Using prefix: ', bot.prefix);
+    console.log('Using prefix: ', client.prefix);
 
     LoadEvents('guildCreate');
+    LoadEvents('messageCreate');
 });
 
-bot.on('messageCreate', (msg) => {
-    const message = new Message({message: msg, bot});
-
-    if (message.hasPrefix()) {
-        if (message.plainContent === 'ping') {
-            message.send('pong!');
-        }
-    }
-});
-
-bot.on('guildCreate', guild => {
-    TriggerEvents('guildCreate', guild);
-});
+client.on('messageCreate', msg => TriggerEvents('messageCreate', msg));
+client.on('guildCreate', guild => TriggerEvents('guildCreate', guild));
 
 try {
-    bot.start();
+    client.start();
 } catch (err) {
     console.error(err);
     process.exit(1);
