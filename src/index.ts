@@ -21,9 +21,7 @@ bot.on('messageCreate', (msg) => {
     }
 });
 
-bot.on('guildCreate', guild => {
-    TriggerEvents('guildCreate', guild);
-});
+bot.on('guildCreate', guild => TriggerEvents('guildCreate', guild));
 
 try {
     bot.start();
