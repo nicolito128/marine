@@ -1,4 +1,4 @@
-import { CommandStruct, CommandTriggerArgs } from '../../../../lib/commands/index';
+import type { CommandStruct, CommandTriggerArgs } from '../../../../lib/commands/index';
 
 export const Command = new class implements CommandStruct {
     constructor() {

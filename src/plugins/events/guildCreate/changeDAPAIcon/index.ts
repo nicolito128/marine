@@ -1,5 +1,5 @@
 import { Guild } from '@biscuitland/core';
-import { Events, Plugin } from '../../../../../lib/plugins/index';
+import type { Events, Plugin } from '../../../../../lib/plugins/index';
 
 const ONE_DAY = 24 * 3600 * 1000; // milliseconds in a day
 

@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 import { Message } from '@biscuitland/core';
 import CustomMessage from '../../../../../lib/messages/index';
-import { Events, Plugin } from '../../../../../lib/plugins/index';
 import { CommandStruct } from '../../../../../lib/commands/index';
+import type { Events, Plugin } from '../../../../../lib/plugins/index';
 
 export const Event = new class implements Plugin {
     constructor() {
