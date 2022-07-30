@@ -3,7 +3,7 @@ import type { CommandStruct, CommandTriggerArgs } from '../../../../lib/commands
 export const Command = new class implements CommandStruct {
     constructor() {
         this.name = 'ping';
-        this.description = 'description';
+        this.description = 'Get latency of the bot.';
     }
 
     name: string;
@@ -16,7 +16,7 @@ export const Command = new class implements CommandStruct {
 
         const end = Date.now();
 
-        message.send(`Pong! \`${end - start}ms\` :ping_pong:`);
+        message.send(`Pong! :ping_pong: \`${end - start}ms\``);
     }
 }
 
