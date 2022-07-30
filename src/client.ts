@@ -4,12 +4,9 @@ import { GuildCache } from '../lib/cache/index';
 import { config } from 'dotenv';
 import * as process from 'process';
 
-const intents = GatewayIntents.MessageContent | 
-                GatewayIntents.Guilds | 
-                GatewayIntents.GuildMessages | 
-                GatewayIntents.GuildMembers | 
-                GatewayIntents.Guilds |
-                GatewayIntents.GuildScheduledEvents;
+const intents = GatewayIntents.MessageContent |
+    GatewayIntents.GuildMessages |
+    GatewayIntents.Guilds;
 
 export class Client extends Session {    
     constructor() {
