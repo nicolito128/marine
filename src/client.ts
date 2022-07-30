@@ -11,15 +11,14 @@ const intents = GatewayIntents.MessageContent |
                 GatewayIntents.Guilds |
                 GatewayIntents.GuildScheduledEvents;
 
-export class Client {    
+export class Client extends Session {    
     constructor() {
-        this.session = new Session({ token: env.MARINE_TOKEN || "", intents });
+        super({ token: env.MARINE_TOKEN || "", intents })
         this.prefix = env.PREFIX || "m.";
         this.intents = intents;
         this.guilds = new GuildCache();
     }
 
-    readonly session: Session
     readonly prefix: string;
     readonly intents: number;
     readonly guilds: GuildCache;
