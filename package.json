@@ -15,7 +15,6 @@
     "@biscuitland/api-types": "^1.0.1",
     "@biscuitland/cache": "^1.0.1",
     "@biscuitland/core": "^1.0.1",
-    "@oasisjs/biscuit": "^0.2.4",
     "@types/node": "^18.6.2",
     "dotenv": "^16.0.1",
     "typescript": "^4.7.4"
