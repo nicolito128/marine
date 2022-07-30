@@ -1,11 +1,11 @@
-import client from './client';
-import { LoadEvents, TriggerEvents } from '../lib/plugins/index';
-import { StatusTypes } from '@biscuitland/core';
+import { loadEvents, triggerEvents } from '../lib/plugins/index';
 import { ActivityTypes } from '@biscuitland/api-types';
+import { StatusTypes } from '@biscuitland/core';
+import client from './client';
 
 const events = {
-    guildCreate: LoadEvents('guildCreate'),
-    messageCreate: LoadEvents('messageCreate')
+    guildCreate: loadEvents('guildCreate'),
+    messageCreate: loadEvents('messageCreate')
 };
 
 client.events.on('ready', async ({ user }) => {
@@ -28,14 +28,14 @@ client.events.on('ready', async ({ user }) => {
 
 client.events.on('messageCreate', msg => {
     events.messageCreate();
-    TriggerEvents('messageCreate', msg)
+    triggerEvents('messageCreate', msg)
 });
 
 client.events.on('guildCreate', guild => {
     client.guilds.set(guild.id, guild);
     
     events.guildCreate();
-    TriggerEvents('guildCreate', guild);
+    triggerEvents('guildCreate', guild);
 });
 
 try {

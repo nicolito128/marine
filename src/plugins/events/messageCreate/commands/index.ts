@@ -1,8 +1,9 @@
-import * as fs from 'fs';
-import { Message } from '@biscuitland/core';
-import CustomMessage from '../../../../../lib/messages/index';
-import { CommandStruct } from '../../../../../lib/commands/index';
 import type { KeywordEvent, Plugin } from '../../../../../lib/plugins/index';
+import { CommandStruct } from '../../../../../lib/commands/index';
+import CustomMessage from '../../../../../lib/messages/index';
+import { Message } from '@biscuitland/core';
+import * as path from 'path';
+import * as fs from 'fs';
 
 export const Event = new class implements Plugin {
     constructor() {
@@ -47,7 +48,7 @@ export const Event = new class implements Plugin {
                         file = file.replace('.ts', '.js');
 
                         // Requiring the module 
-                        const required: { default?: CommandStruct, Command?: CommandStruct } = require(__dirname + `/../../../commands/${folder}/${file}`);
+                        const required: { default?: CommandStruct, Command?: CommandStruct } = require(path.join(__dirname, '..', '..', '..', `commands/${folder}/${file}`));
 
                         // If the module has a default export, add it to the collection.
                         const command = required.Command as CommandStruct;

@@ -1,8 +1,8 @@
-import { Session } from '@biscuitland/core';
 import { GatewayIntents } from '@biscuitland/api-types';
 import { GuildCache } from '../lib/cache/index';
-import { config } from 'dotenv';
+import { Session } from '@biscuitland/core';
 import * as process from 'process';
+import { config } from 'dotenv';
 
 const intents = GatewayIntents.MessageContent |
     GatewayIntents.GuildMessages |

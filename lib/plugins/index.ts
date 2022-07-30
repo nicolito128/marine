@@ -1,4 +1,5 @@
 import  { Events } from '@biscuitland/core';
+import * as path from 'path';
 import * as fs from 'fs';
 
 const cache = new Map<string, Plugin>();
@@ -25,7 +26,7 @@ export abstract class Plugin implements PluginSchema{
 }
 
 // Load the events in the events folder into PluginCollection.
-export function LoadEvents(event: KeywordEvent) {
+export function loadEvents(event: KeywordEvent) {
     let loaded = false;
 
     return () => {
@@ -39,7 +40,7 @@ export function LoadEvents(event: KeywordEvent) {
                         file = file.replace('.ts', '.js');
 
                         // Requiring the module 
-                        const required: { default?: Plugin, Event?: Plugin } = require(__dirname + `/../../src/plugins/events/${event}/${folder}/${file}`);
+                        const required: { default?: Plugin, Event?: Plugin } = require(path.join(__dirname, '..', '..', `src/plugins/events/${event}/${folder}/${file}`));
 
                         // If the module has a default export, add it to the collection.
                         const plugin = required.Event as Plugin;
@@ -55,7 +56,7 @@ export function LoadEvents(event: KeywordEvent) {
 }
 
 // Catch an event and execute the plugins that are listening to it.
-export function TriggerEvents(event: KeywordEvent, ...args: TriggerArguments) {
+export function triggerEvents(event: KeywordEvent, ...args: TriggerArguments) {
     cache.forEach((plugin) => {
         if (plugin.type === event) {
             plugin.trigger(...args);
