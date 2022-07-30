@@ -5,7 +5,7 @@ import * as fs from 'fs';
 const cache = new Map<string, Plugin>();
 
 // Event keywords are used to match events to plugins. Ex: guildCreate, messageCreate, etc.
-export type KeywordEvent = keyof Events;
+export type KeywordEvent = keyof (Events) & string;
 
 // Represents essential data for a plugin
 export type PluginSchema = {
