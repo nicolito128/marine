@@ -14,7 +14,8 @@ client.events.on('ready', async ({ user }) => {
 
     for (const { id } of client.ws.agent.shards.values()) {
         client.editStatus(id, {
-            status: StatusTypes.online,
+            // @ts-ignore
+            status: StatusTypes[StatusTypes.dnd],
             activities: [
                 {
                     name: 'Marine says hi!',
@@ -22,7 +23,7 @@ client.events.on('ready', async ({ user }) => {
                     createdAt: Date.now(),
                 }
             ],
-        }, true)
+        })
     }
 });
 
