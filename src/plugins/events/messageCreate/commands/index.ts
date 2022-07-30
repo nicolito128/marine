@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import * as biscuit from '@oasisjs/biscuit/biscuit';
+import { Message } from '@biscuitland/core';
 import CustomMessage from '../../../../../lib/messages/index';
 import { CommandStruct } from '../../../commands';
 import { Events, Plugin } from '../../../plugins';
@@ -17,7 +17,7 @@ export const Event = new class implements Plugin {
     type: Events;
     loaded: boolean;
 
-    async trigger(msg: biscuit.Message) {
+    async trigger(msg: Message) {
         if (!this.loaded) {
             this.loadCommands();
             this.loaded = true;
@@ -32,8 +32,7 @@ export const Event = new class implements Plugin {
                 await command.trigger({
                     message: message,
                     args: args.slice(1),
-                    client: message.client,
-                    cache: message.client.cache
+                    client: message.client
                 });
             }
         }

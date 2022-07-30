@@ -1,4 +1,3 @@
-import { SessionCache } from '@oasisjs/biscuit/cache';
 import CustomMessage from '../../lib/messages';
 import { Client } from '../client';
 
@@ -26,7 +25,6 @@ export type CommandTriggerArgs = {
     message: CustomMessage;
     args: string[];
     client: Client;
-    cache: SessionCache;
 }
 
 export type CommandTrigger = (args: CommandTriggerArgs) => void | Promise<void>;
