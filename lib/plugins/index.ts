@@ -25,26 +25,32 @@ export abstract class Plugin implements PluginSchema{
 
 // Load the events in the events folder into PluginCollection.
 export function LoadEvents(event: Events) {
-    cache.clear();
+    let loaded = false;
 
-    fs.readdirSync(`src/plugins/events/${event}`)
-        .forEach(folder => {
-            fs.readdirSync(`src/plugins/events/${event}/${folder}`)
-                .forEach(file => {
-                    // Catch only .js files (because the loaded files are from the dist folder)
-                    file = file.replace('.ts', '.js');
+    return () => {
+        if (!loaded) {
+            cache.clear();
+            
+            fs.readdirSync(`src/plugins/events/${event}`).forEach(folder => {
+                fs.readdirSync(`src/plugins/events/${event}/${folder}`)
+                    .forEach(file => {
+                        // Catch only .js files (because the loaded files are from the dist folder)
+                        file = file.replace('.ts', '.js');
 
-                    // Requiring the module 
-                    const required: { default?: Plugin, Event?: Plugin } = require(__dirname + `/../../src/plugins/events/${event}/${folder}/${file}`);
+                        // Requiring the module 
+                        const required: { default?: Plugin, Event?: Plugin } = require(__dirname + `/../../src/plugins/events/${event}/${folder}/${file}`);
 
-                    // If the module has a default export, add it to the collection.
-                    const plugin = required.Event as Plugin;
+                        // If the module has a default export, add it to the collection.
+                        const plugin = required.Event as Plugin;
 
-                    // Sets the new event.
-                    cache.set(`${plugin.type}/${plugin.name}`, plugin);
-                }
-            )
-        })
+                        // Sets the new event.
+                        cache.set(`${plugin.type}/${plugin.name}`, plugin);
+                    })
+                });
+
+            loaded = true;
+        }
+    }
 }
 
 // Catch an event and execute the plugins that are listening to it.
