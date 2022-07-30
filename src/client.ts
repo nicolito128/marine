@@ -1,9 +1,10 @@
 import { Session } from '@biscuitland/core';
 import { GatewayIntents } from '@biscuitland/api-types';
 import { GuildCache } from '../lib/cache/index';
-import LoadEnv from '../lib/env/index';
+import { config } from 'dotenv';
+import * as process from 'process';
 
-const [ env ] = LoadEnv();
+
 const intents = GatewayIntents.MessageContent | 
                 GatewayIntents.Guilds | 
                 GatewayIntents.GuildMessages | 
@@ -13,8 +14,13 @@ const intents = GatewayIntents.MessageContent |
 
 export class Client extends Session {    
     constructor() {
-        super({ token: env.MARINE_TOKEN || "", intents })
-        this.prefix = env.PREFIX || "m.";
+        if (!process.env.MARINE_TOKEN || !process.env.PREFIX) {
+            config({ debug: true });
+        }
+
+        super({ token: process.env.MARINE_TOKEN || "", intents })
+
+        this.prefix = process.env.PREFIX || "m.";
         this.intents = intents;
         this.guilds = new GuildCache();
     }
