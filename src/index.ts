@@ -18,7 +18,7 @@ client.events.on('ready', async ({ user }) => {
             activities: [
                 {
                     name: 'Marine says hi!',
-                    type: ActivityTypes.Listening,
+                    type: ActivityTypes.Streaming,
                     createdAt: Date.now(),
                 }
             ],
