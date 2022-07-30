@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import { Message } from '@biscuitland/core';
 import CustomMessage from '../../../../../lib/messages/index';
 import { CommandStruct } from '../../../../../lib/commands/index';
-import type { Events, Plugin } from '../../../../../lib/plugins/index';
+import type { KeywordEvent, Plugin } from '../../../../../lib/plugins/index';
 
 export const Event = new class implements Plugin {
     constructor() {
@@ -13,7 +13,7 @@ export const Event = new class implements Plugin {
     }
 
     name: string;
-    type: Events;
+    type: KeywordEvent;
     loaded: boolean;
     cache: Map<string, CommandStruct>;
 

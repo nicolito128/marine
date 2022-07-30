@@ -4,7 +4,6 @@ import { GuildCache } from '../lib/cache/index';
 import { config } from 'dotenv';
 import * as process from 'process';
 
-
 const intents = GatewayIntents.MessageContent | 
                 GatewayIntents.Guilds | 
                 GatewayIntents.GuildMessages | 

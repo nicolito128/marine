@@ -1,8 +1,9 @@
+import  { Events } from '@biscuitland/core';
 import * as fs from 'fs';
 
 const cache = new Map<string, Plugin>();
 
-export type Events = 'ready' | 'messageCreate' | 'messageUpdate' | 'messageDelete' | 'messageReactionAdd' | 'messageReactionRemove' | 'messageReactionRemoveAll' | 'messageReactionRemoveEmoji' | 'guildCreate' | 'guildDelete' | 'guildMemberAdd' | 'guildMemberUpdate' | 'guildMemberRemove' | 'guildBanAdd' | 'guildBanRemove' | 'guildEmojisUpdate' | 'guildRoleCreate' | 'guildRoleUpdate' | 'guildRoleDelete' | 'typingStart' | 'channelCreate' | 'channelUpdate' | 'channelDelete' | 'channelPinsUpdate' | 'threadCreate' | 'threadUpdate' | 'threadDelete' | 'threadListSync' | 'threadMemberUpdate' | 'threadMemberUpdate' | 'interactionCreate' | 'integrationCreate' | 'integrationUpdate' | 'integrationDelete' | 'inviteCreate' | 'inviteDelete' | 'autoModerationRuleCreate' | 'autoModerationRuleUpdate' | 'autoModerationRuleDelete' | 'autoModerationActionExecution' | 'stageInstanceCreate' | 'stageInstanceUpdate' | 'stageInstanceDelete' | 'guildScheduledEventCreate' | 'guildScheduledEventUpdate' | 'guildScheduledEventDelete' | 'guildScheduledEventUserAdd' | 'guildScheduledEventUserRemove' | 'raw' | 'webhooksUpdate' | 'userUpdate' | 'presenceUpdate' | 'debug';
+export type KeywordEvent = keyof Events;
 
 export type PluginSchema = {
     name: string;
@@ -19,12 +20,12 @@ export type TriggerArguments = [obj?: any, ddy?: any];
 export abstract class Plugin implements PluginSchema{
     abstract name: string;
     abstract description?: string;
-    abstract type: Events;
+    abstract type: KeywordEvent;
     abstract trigger: Trigger<TriggerArguments>;
 }
 
 // Load the events in the events folder into PluginCollection.
-export function LoadEvents(event: Events) {
+export function LoadEvents(event: KeywordEvent) {
     let loaded = false;
 
     return () => {
@@ -54,7 +55,7 @@ export function LoadEvents(event: Events) {
 }
 
 // Catch an event and execute the plugins that are listening to it.
-export function TriggerEvents(event: Events, ...args: TriggerArguments) {
+export function TriggerEvents(event: KeywordEvent, ...args: TriggerArguments) {
     cache.forEach((plugin) => {
         if (plugin.type === event) {
             plugin.trigger(...args);
