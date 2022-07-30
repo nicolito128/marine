@@ -9,8 +9,14 @@ export const Command = new class implements CommandStruct {
     name: string;
     description: string;
 
-    trigger({ message }: CommandTriggerArgs) {
-        message.send('Pong! :ping_pong:');
+    async trigger({ message, client }: CommandTriggerArgs) {
+        const start = Date.now();
+
+        await client.rest.get('/users/@me')
+
+        const end = Date.now();
+
+        message.send(`Pong! \`${end - start}ms\` :ping_pong:`);
     }
 }
 
