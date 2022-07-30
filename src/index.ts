@@ -1,9 +1,22 @@
 import client from './client';
 import { LoadEvents, TriggerEvents } from '../lib/plugins/index';
+import { StatusTypes } from '@biscuitland/core';
+import { ActivityTypes } from '@biscuitland/api-types';
 
 client.events.on('ready', async ({ user }) => {
     console.log('Logged in as:', user.username);
     console.log('Using prefix: ', client.prefix);
+
+    client.editStatus(0, {
+        status: StatusTypes.online,
+        activities: [
+            {
+                name: 'Hi!',
+                type: ActivityTypes.Streaming,
+                createdAt: Date.now()
+            }
+        ]
+    })
 });
 
 client.events.on('messageCreate', msg => {
