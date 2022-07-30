@@ -1,4 +1,4 @@
-import { Guild } from "@oasisjs/biscuit/biscuit";
+import { Guild } from "@biscuitland/core";
 import { Events, Plugin } from "src/plugins/plugins";
 
 const ONE_DAY = 24 * 3600 * 1000; // milliseconds in a day
