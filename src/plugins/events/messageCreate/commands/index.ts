@@ -1,21 +1,21 @@
 import * as fs from 'fs';
 import { Message } from '@biscuitland/core';
 import CustomMessage from '../../../../../lib/messages/index';
-import { CommandStruct } from '../../../commands';
-import { Events, Plugin } from '../../../plugins';
-
-const CommandCollection = new Map<string, CommandStruct>();
+import { Events, Plugin } from '../../../../../lib/plugins/index';
+import { CommandStruct } from '../../../../../lib/commands/index';
 
 export const Event = new class implements Plugin {
     constructor() {
         this.name = 'Command Handler';
         this.type = 'messageCreate';
         this.loaded = false;
+        this.cache = new Map<string, CommandStruct>();
     }
 
     name: string;
     type: Events;
     loaded: boolean;
+    cache: Map<string, CommandStruct>;
 
     async trigger(msg: Message) {
         if (!this.loaded) {
@@ -26,13 +26,13 @@ export const Event = new class implements Plugin {
         const message = new CustomMessage(msg);
         if (message.hasPrefix()) {
             const args = msg.content.split(' ');
-            const command = CommandCollection.get(args[0].replace(message.client.prefix, ''));
+            const command = this.cache.get(args[0].replace(message.client.prefix, ''));
 
-            if (command && !msg.isBot) {
-                await command.trigger({
-                    message: message,
-                    args: args.slice(1),
-                    client: message.client
+            if (command && !message.self.isBot) {
+                (command as CommandStruct).trigger({
+                    message,
+                    client: message.client,
+                    args: args.slice(1)
                 });
             }
         }
@@ -51,7 +51,7 @@ export const Event = new class implements Plugin {
 
                         // If the module has a default export, add it to the collection.
                         const command = required.Command as CommandStruct;
-                        CommandCollection.set(command.name, command);
+                        this.cache.set(command.name, command);
                         console.log('Command loaded: ', command.name);
                     }
                 )

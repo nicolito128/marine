@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 
-export const PluginCollection: Map<string, Plugin[]> = new Map();
+const cache = new Map<string, Plugin>();
 
 export type Events = 'ready' | 'messageCreate' | 'messageUpdate' | 'messageDelete' | 'messageReactionAdd' | 'messageReactionRemove' | 'messageReactionRemoveAll' | 'messageReactionRemoveEmoji' | 'guildCreate' | 'guildDelete' | 'guildMemberAdd' | 'guildMemberUpdate' | 'guildMemberRemove' | 'guildBanAdd' | 'guildBanRemove' | 'guildEmojisUpdate' | 'guildRoleCreate' | 'guildRoleUpdate' | 'guildRoleDelete' | 'typingStart' | 'channelCreate' | 'channelUpdate' | 'channelDelete' | 'channelPinsUpdate' | 'threadCreate' | 'threadUpdate' | 'threadDelete' | 'threadListSync' | 'threadMemberUpdate' | 'threadMemberUpdate' | 'interactionCreate' | 'integrationCreate' | 'integrationUpdate' | 'integrationDelete' | 'inviteCreate' | 'inviteDelete' | 'autoModerationRuleCreate' | 'autoModerationRuleUpdate' | 'autoModerationRuleDelete' | 'autoModerationActionExecution' | 'stageInstanceCreate' | 'stageInstanceUpdate' | 'stageInstanceDelete' | 'guildScheduledEventCreate' | 'guildScheduledEventUpdate' | 'guildScheduledEventDelete' | 'guildScheduledEventUserAdd' | 'guildScheduledEventUserRemove' | 'raw' | 'webhooksUpdate' | 'userUpdate' | 'presenceUpdate' | 'debug';
 
@@ -25,6 +25,8 @@ export abstract class Plugin implements PluginSchema{
 
 // Load the events in the events folder into PluginCollection.
 export function LoadEvents(event: Events) {
+    cache.clear();
+
     fs.readdirSync(`src/plugins/events/${event}`)
         .forEach(folder => {
             fs.readdirSync(`src/plugins/events/${event}/${folder}`)
@@ -33,16 +35,13 @@ export function LoadEvents(event: Events) {
                     file = file.replace('.ts', '.js');
 
                     // Requiring the module 
-                    const required: { default?: Plugin, Event?: Plugin } = require(__dirname + `/events/${event}/${folder}/${file}`);
+                    const required: { default?: Plugin, Event?: Plugin } = require(__dirname + `/../../src/plugins/events/${event}/${folder}/${file}`);
 
                     // If the module has a default export, add it to the collection.
                     const plugin = required.Event as Plugin;
-                    const arr = PluginCollection.get(event) || [];
-                    arr.push(plugin)
 
                     // Sets the new event.
-                    PluginCollection.set(event || "", arr);
-                    console.log('Plugin loaded: ', plugin.name);
+                    cache.set(`${plugin.type}/${plugin.name}`, plugin);
                 }
             )
         })
@@ -50,5 +49,9 @@ export function LoadEvents(event: Events) {
 
 // Catch an event and execute the plugins that are listening to it.
 export function TriggerEvents(event: Events, ...args: TriggerArguments) {
-    PluginCollection.get(event)?.forEach(plugin => plugin.trigger(...args))
+    cache.forEach((plugin) => {
+        if (plugin.type === event) {
+            plugin.trigger(...args);
+        }
+    })
 }

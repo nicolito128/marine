@@ -1,6 +1,6 @@
-import { Session, Guild } from '@biscuitland/core';
+import { Session } from '@biscuitland/core';
 import { GatewayIntents } from '@biscuitland/api-types';
-import { MemoryCacheAdapter } from '@biscuitland/cache';
+import { GuildCache } from '../lib/cache/index';
 import LoadEnv from '../lib/env/index';
 
 const [ env ] = LoadEnv();
@@ -23,20 +23,6 @@ export class Client {
     readonly prefix: string;
     readonly intents: number;
     readonly guilds: GuildCache;
-}
-
-export class GuildCache extends MemoryCacheAdapter {
-    constructor() {
-        super();
-    }
-
-    override set(id: string, guild: Guild) {
-        return super.set(id, guild);
-    }
-
-    override get<Guild>(id: string) {
-        return super.get<Guild>(id);
-    }
 }
 
 const client = new Client();
