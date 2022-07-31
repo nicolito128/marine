@@ -1,6 +1,5 @@
 import { loadEvents, triggerEvents } from '../lib/plugins/index';
 import { ActivityTypes } from '@biscuitland/api-types';
-import { StatusTypes } from '@biscuitland/core';
 import client from './client';
 
 const events = {
@@ -15,7 +14,7 @@ client.events.on('ready', async ({ user }) => {
     for (const { id } of client.ws.agent.shards.values()) {
         client.editStatus(id, {
             // @ts-ignore
-            status: StatusTypes[StatusTypes.dnd],
+            status: 'online',
             activities: [
                 {
                     name: 'Marine says hi!',
