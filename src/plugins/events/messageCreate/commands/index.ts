@@ -50,10 +50,11 @@ export const Event = new class implements Plugin {
                         // Requiring the module 
                         const required: { default?: CommandStruct, Command?: CommandStruct } = require(join(__dirname, '..', '..', '..', `commands/${folder}/${file}`));
 
-                        // If the module has a default export, add it to the collection.
-                        const command = required.Command as CommandStruct;
-                        this.cache.set(command.name, command);
-                        console.log('Command loaded: ', command.name);
+                        if (required?.Command && required?.Command instanceof CommandStruct) {
+                            const command = required.Command as CommandStruct;
+                            this.cache.set(command.name, command);
+                            console.log('Command loaded: ', command.name);
+                        }
                     }
                 )
             })
