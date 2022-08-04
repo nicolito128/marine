@@ -20,21 +20,27 @@ export const Event = new class implements Plugin {
             'https://i.imgur.com/zlCr3No.png',
             'https://i.imgur.com/agZ4vZW.jpeg'
         ];
+        this.loaded = false;
     }
     
     name: string;
     type: KeywordEvent;
     guildId: string;
     images: string[];
+    loaded: boolean;
 
     async trigger(_client: Client,guild: Guild) {
-        if (guild.id === this.guildId) {
-            const image = this.selectImage();
+        if (!this.loaded) {
+            if (guild.id === this.guildId) {
+                const image = this.selectImage();
+    
+                setInterval(async () => {
+                    const url = image();
+                    await guild.edit({ icon: url })
+                }, 3 * 3600 * 1000);
+            }
 
-            setInterval(async () => {
-                const url = image();
-                await guild.edit({ icon: url })
-            }, 3 * 3600 * 1000);
+            this.loaded = true;
         }
     }
 
