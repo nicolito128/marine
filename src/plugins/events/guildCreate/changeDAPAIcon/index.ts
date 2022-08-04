@@ -2,7 +2,7 @@ import type { KeywordEvent, Plugin } from '../../../../../lib/plugins';
 import { Guild } from '@biscuitland/core';
 import { Client } from '../../../../client';
 
-const ONE_DAY = 24 * 3600 * 1000; // milliseconds in a day
+//const ONE_DAY = 24 * 3600 * 1000; // milliseconds in a day
 
 export const Event = new class implements Plugin {
     constructor() {
@@ -34,7 +34,7 @@ export const Event = new class implements Plugin {
             setInterval(async () => {
                 const url = image();
                 await guild.edit({ icon: url })
-            }, ONE_DAY);
+            }, 3 * 3600 * 1000);
         }
     }
 
