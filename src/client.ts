@@ -42,11 +42,11 @@ app.all("*", async (req, reply) => {
     break;
     }
 
-    if (response)
+    if (response) {
         reply.status(200).send({ status: 200, data: response });
-
-    else
+    } else {
         reply.status(204).send({ status: 204, data: null });
+    }
 });
 
 export class Client extends Biscuit {    
