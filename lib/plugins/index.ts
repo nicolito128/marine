@@ -1,6 +1,7 @@
 import  { Events } from '@biscuitland/core';
 import { join } from 'path';
 import * as fs from 'fs';
+import { Client } from '../../src/client';
 
 const cache = new Map<string, Plugin>();
 
@@ -14,7 +15,7 @@ export type PluginSchema = {
 };
 
 // Function to be executed when an event is triggered.
-export type Trigger<T extends TriggerArguments> = (...args: T) => unknown | Promise<unknown>;
+export type Trigger<T extends TriggerArguments> = (client: Client, ...args: T) => unknown | Promise<unknown>;
 
 // Arguments for triggered the function
 export type TriggerArguments = [obj?: any, ddy?: any];
@@ -58,10 +59,10 @@ export function loadEvents(event: KeywordEvent) {
 }
 
 // Catch an event and execute the plugins that are listening to it.
-export function triggerEvents(event: KeywordEvent, ...args: TriggerArguments) {
+export function triggerEvents(event: KeywordEvent, client: Client, ...args: TriggerArguments) {
     cache.forEach((plugin) => {
         if (plugin.type === event) {
-            plugin.trigger(...args);
+            plugin.trigger(client, ...args);
         }
     })
 }

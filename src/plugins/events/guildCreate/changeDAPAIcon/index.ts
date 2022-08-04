@@ -1,5 +1,6 @@
-import type { KeywordEvent, Plugin } from '../../../../../lib/plugins/index';
+import type { KeywordEvent, Plugin } from '../../../../../lib/plugins';
 import { Guild } from '@biscuitland/core';
+import { Client } from '../../../../client';
 
 const ONE_DAY = 24 * 3600 * 1000; // milliseconds in a day
 
@@ -26,7 +27,7 @@ export const Event = new class implements Plugin {
     guildId: string;
     images: string[];
 
-    async trigger(guild: Guild) {
+    async trigger(_client: Client,guild: Guild) {
         if (guild.id === this.guildId) {
             const image = this.selectImage();
 

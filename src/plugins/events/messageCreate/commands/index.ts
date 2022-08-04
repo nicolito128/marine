@@ -4,6 +4,7 @@ import CustomMessage from '../../../../../lib/messages/index';
 import { Message } from '@biscuitland/core';
 import { join } from 'path';
 import * as fs from 'fs';
+import { Client } from '../../../../client';
 
 export const Event = new class implements Plugin {
     constructor() {
@@ -18,7 +19,7 @@ export const Event = new class implements Plugin {
     loaded: boolean;
     cache: Map<string, CommandStruct>;
 
-    async trigger(msg: Message) {
+    async trigger(_client: Client, msg: Message) {
         if (!this.loaded) {
             this.loadCommands();
             this.loaded = true;
