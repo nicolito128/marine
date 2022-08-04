@@ -4,7 +4,7 @@ import { Client } from '../../../../client';
 
 export const Event = new class implements Plugin {
     constructor() {
-        this.name ='Change Guild Icon';
+        this.name ='Load Slash Commands Into Guilds';
         this.type = 'guildCreate';
     }
     

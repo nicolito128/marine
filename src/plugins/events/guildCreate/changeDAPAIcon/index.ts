@@ -8,7 +8,7 @@ export const Event = new class implements Plugin {
     constructor() {
         this.name ='Change Guild Icon';
         this.type = 'guildCreate';
-        this.guildId = '744180989841003520';
+        this.guildId = '973427352560365658';
         this.images = [
             'https://i.imgur.com/fHWZEZK.png',
             'https://i.imgur.com/nQHBa3I.png',
@@ -20,36 +20,30 @@ export const Event = new class implements Plugin {
             'https://i.imgur.com/zlCr3No.png',
             'https://i.imgur.com/agZ4vZW.jpeg'
         ];
-        this.loaded = false;
     }
     
     name: string;
     type: KeywordEvent;
     guildId: string;
     images: string[];
-    loaded: boolean;
 
     async trigger(_client: Client,guild: Guild) {
-        if (!this.loaded) {
-            if (guild.id === this.guildId) {
-                const image = this.selectImage();
+        if (guild.id === this.guildId) {
+            const image = this.selectImage();
     
-                setInterval(async () => {
-                    const url = image();
-                    await guild.edit({ icon: url })
-                }, 3 * 3600 * 1000);
-            }
-
-            this.loaded = true;
+            setInterval(async () => {
+                const url = image();
+                await guild.edit({ icon: url })
+            }, 10 * 1000);
         }
     }
 
     selectImage(): () => string {
         let i: number = 0;
     
-        return function(){
+        return () => {
             i++;
-            if (i == this.images.length ) {
+            if (i >= this.images.length) {
                 i = 0;
             }
     

@@ -50,6 +50,7 @@ export function loadEvents(event: KeywordEvent) {
 
                         // Sets the new event.
                         cache.set(`${plugin.type}/${plugin.name}`, plugin);
+                        console.log('Plugin loaded: ', plugin.name);
                     })
                 });
 
