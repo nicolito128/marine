@@ -9,7 +9,7 @@ const events = {
 };
 
 client.events.on('ready', async ({ user }) => {
-    console.log('Logged in as:', user.username);
+    console.log(`Logged in as ${user.tag}!`);
     console.log('Using prefix: ', client.prefix);
 
     for (const { id } of client.ws.agent.shards.values()) {
