@@ -14,7 +14,6 @@ client.events.on('ready', async ({ user }) => {
 
     for (const { id } of client.ws.agent.shards.values()) {
         client.editStatus(id, {
-            // @ts-ignore
             status: 'online',
             activities: [
                 {
