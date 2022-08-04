@@ -16,8 +16,11 @@
     "@biscuitland/cache": "^1.2.0",
     "@biscuitland/core": "^1.2.0",
     "@biscuitland/helpers": "^1.2.0",
+    "@biscuitland/rest": "^1.2.0",
+    "@biscuitland/ws": "^1.2.0",
     "@types/node": "^18.6.2",
     "dotenv": "^16.0.1",
+    "fastify": "^4.3.0",
     "typescript": "^4.7.4"
   },
   "devDependencies": {
