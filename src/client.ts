@@ -1,6 +1,6 @@
 import { GatewayIntents } from '@biscuitland/api-types';
 import { GuildCache } from '../lib/cache/index';
-import { Session } from '@biscuitland/core';
+import { Biscuit } from '@biscuitland/core';
 import * as process from 'process';
 import { config } from 'dotenv';
 
@@ -8,7 +8,7 @@ const intents = GatewayIntents.MessageContent |
     GatewayIntents.GuildMessages |
     GatewayIntents.Guilds;
 
-export class Client extends Session {    
+export class Client extends Biscuit {    
     constructor() {
         if (!process.env.MARINE_TOKEN || !process.env.PREFIX) {
             config({ debug: true });
