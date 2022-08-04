@@ -2,7 +2,7 @@ import { GatewayIntents } from '@biscuitland/api-types';
 import { GuildCache } from '../lib/cache/index';
 import { Biscuit } from '@biscuitland/core';
 import * as process from 'process';
-import { config } from 'dotenv';
+import 'dotenv/config';
 
 const intents = GatewayIntents.MessageContent |
     GatewayIntents.GuildMessages |
@@ -10,10 +10,6 @@ const intents = GatewayIntents.MessageContent |
 
 export class Client extends Biscuit {    
     constructor() {
-        if (!process.env.MARINE_TOKEN || !process.env.PREFIX) {
-            config({ debug: true });
-        }
-
         super({ token: process.env.MARINE_TOKEN || "", intents })
 
         this.prefix = process.env.PREFIX || "m.";
