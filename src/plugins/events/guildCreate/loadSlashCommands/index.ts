@@ -1,7 +1,6 @@
 import type { KeywordEvent, Plugin } from '../../../../../lib/plugins';
 import { CreateApplicationCommand, Guild } from '@biscuitland/core';
 import { Client } from '../../../../client';
-import SlashEvent from '../../interactionCreate/loadSlashCommands/index';
 
 export const Event = new class implements Plugin {
     constructor() {
@@ -14,7 +13,7 @@ export const Event = new class implements Plugin {
 
     async trigger(client: Client, guild: Guild) {
         let arr: CreateApplicationCommand[] = [];
-        for (const cmd of SlashEvent.cache.values()) {
+        for (const cmd of client.commands.values()) {
             if (cmd?.slash) {
                 arr.push(cmd?.slash);
             }
