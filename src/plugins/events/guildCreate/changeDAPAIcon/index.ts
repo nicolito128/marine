@@ -29,16 +29,14 @@ export const Event = new class implements Plugin {
 
     async trigger(_client: Client,guild: Guild) {
         if (guild.id === this.guildId) {
-            try {
-                const image = this.selectImage();
-    
-                setInterval(async () => {
-                    const url = image();
-                    await guild.edit({ icon: url })
-                }, 3 * 3600 * 1000);
-            } catch(err) {
-                console.log(err);
-            }
+            const image = this.selectImage();
+            console.log("entró")
+
+            setInterval(async () => {
+                const url = image();
+                console.log("cambiando : " + url);
+                await guild.edit({ icon: url })
+            }, 3 * 3600 * 1000);
         }
     }
 
